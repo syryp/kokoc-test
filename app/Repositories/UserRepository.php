@@ -26,9 +26,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryContrac
             ->newQuery()
             ->where('users.id', $userId)
             ->with('friends')
-            ->get()
-            ->pluck('friends')
-            ->collapse();
+            ->get();
     }
 
     public function getFriendsFriends(int $userId): Collection
@@ -40,12 +38,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryContrac
                 //Исключаем основного юзера
                 $query->where('friends.friend_id', '!=', $userId);
             }])
-            ->get()
-            ->pluck('friends')
-            //Тут шаманим с коллекцией
-            ->collapse()
-            ->pluck('friends')
-            ->collapse()
-            ->unique('id');
+            ->get();
     }
 }

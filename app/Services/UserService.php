@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserService implements UserServiceContract
 {
+    //Логику из друзей решил вынести в трейт
     use FriendsTrait;
 
     public function create(array $params): Model

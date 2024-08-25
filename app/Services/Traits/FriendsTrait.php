@@ -9,12 +9,21 @@ trait FriendsTrait
 {
     public function friendsList(int $userId): Collection
     {
-        return app(UserRepositoryContract::class)->getFriends($userId);
+        return app(UserRepositoryContract::class)
+            ->getFriends($userId)
+            ->pluck('friends')
+            ->collapse();
     }
 
     public function friendsFriendsList(int $userId): Collection
     {
-        return app(UserRepositoryContract::class)->getFriendsFriends($userId);
+        return app(UserRepositoryContract::class)
+            ->getFriendsFriends($userId)
+            ->pluck('friends')
+            ->collapse()
+            ->pluck('friends')
+            ->collapse()
+            ->unique('id');
     }
 
     public function toggleFriend(array $params): void
